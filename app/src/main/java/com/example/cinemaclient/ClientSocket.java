@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class ClientSocket {
-    private static ClientSocket instance = null;
+
     Socket clientSocket = null;
     private BufferedReader in;
     private BufferedWriter out;
@@ -21,24 +23,10 @@ public class ClientSocket {
      * @param port port of server application
      * @throws IOException
      */
-    private ClientSocket(Inet4Address address, int port) throws IOException {
+    public ClientSocket(InetAddress address, int port) throws IOException {
         clientSocket = new Socket(address,port);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-    }
-
-    /**
-     * function for get link to object of this class
-     * @param address
-     * @param port
-     * @return
-     * @throws IOException
-     */
-    public static ClientSocket getInstance(Inet4Address address, int port) throws IOException {
-        if(instance == null){
-            instance = new ClientSocket(address,port);
-        }
-        return instance;
     }
 
     /**
@@ -97,7 +85,7 @@ public class ClientSocket {
      * @throws IOException
      */
     public String sendRequestToGetListOfSessions(String tittle) throws IOException{
-        out.write("getSessionByFilmTittle|"+tittle+"|\0");
+        out.write("getSessionsByFilmTittle|"+tittle+"|\0");
         out.flush();
         answer = in.readLine();
         return answer;
@@ -159,10 +147,5 @@ public class ClientSocket {
         answer = in.readLine();
         return answer;
     }
-
-
-
-
-
 
 }
