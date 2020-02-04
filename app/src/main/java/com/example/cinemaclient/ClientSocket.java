@@ -36,7 +36,7 @@ public class ClientSocket {
      * @throws IOException
      */
     public int sendRequestLogin(String login) throws IOException {
-        out.write(login + "\0");
+        out.write("checkUserNickName|" + login + "\0");
         out.flush();
         answer = in.readLine();
         if(answer.contains("nickNameIsFree")){
