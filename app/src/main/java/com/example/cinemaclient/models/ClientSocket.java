@@ -1,4 +1,4 @@
-package com.example.cinemaclient;
+package com.example.cinemaclient.models;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,13 +17,14 @@ public class ClientSocket {
     private BufferedWriter out;
     private String answer;
 
+
     /**
      * close constructor
      * @param address ip4 address
      * @param port port of server application
-     * @throws IOException
+     * @throws IOException default exception input output
      */
-    public ClientSocket(InetAddress address, int port) throws IOException {
+    public ClientSocket(String address, int port) throws IOException {
         clientSocket = new Socket(address,port);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
@@ -33,7 +34,7 @@ public class ClientSocket {
      * function send request free of busy nickname
      * @param login login which user input
      * @return 1 if nickname is free and 2 if is busy
-     * @throws IOException
+     * @throws IOException default exception input output
      */
     public int sendRequestLogin(String login) throws IOException {
         out.write("checkUserNickName|" + login + "|\0");
@@ -52,7 +53,7 @@ public class ClientSocket {
      * @param lastName is last name of user
      * @param firsName is first name of user
      * @return 1 if add to data base was successfully and 2 if was some error
-     * @throws IOException
+     * @throws IOException default exception input output
      */
     public int sendRequestToAddNewUser(String lastName, String firsName) throws IOException {
         out.write("addNewUserToDB|"+lastName+"|"+firsName+"|\0");
@@ -69,7 +70,7 @@ public class ClientSocket {
     /**
      * function for send request to get list of films
      * @return string list of films
-     * @throws IOException
+     * @throws IOException default exception input output
      */
     public String sendRequestToGetListOfFilms() throws IOException {
         out.write("getListOfFilm\0");
@@ -82,7 +83,7 @@ public class ClientSocket {
      * function for send request to get list of sessions by film tittle
      * @param tittle tittle of chose film
      * @return string of sessions information
-     * @throws IOException
+     * @throws IOException default exception input output
      */
     public String sendRequestToGetListOfSessions(String tittle) throws IOException{
         out.write("getSessionsByFilmTittle|"+tittle+"|\0");
@@ -95,7 +96,7 @@ public class ClientSocket {
      * function for send request to get number of hall by number of session
      * @param numOfSession number of session
      * @return string number of hall
-     * @throws IOException
+     * @throws IOException default exception input output
      */
     public String sendRequestToGetHall(int numOfSession) throws IOException{
         out.write("getHallByNumOfSession|"+Integer.toString(numOfSession)+"|\0");
@@ -108,7 +109,7 @@ public class ClientSocket {
      * function for send request to get free places string by number of session
      * @param numOfSession number of session
      * @return string free places
-     * @throws IOException
+     * @throws IOException default exception input output
      */
     public String sendRequestToGetFreePlaces(int numOfSession) throws IOException{
         out.write("getFreePlacesByNumOfSession|"+Integer.toString(numOfSession)+"|\0");
@@ -122,7 +123,7 @@ public class ClientSocket {
      * @param numOfSession num of chose session
      * @param place chose place
      * @return 1 if user session successfully added to data base and 2 if was some error
-     * @throws IOException
+     * @throws IOException default exception input output
      */
     public int sendRequestToAddNewUserSession(int numOfSession, int place) throws IOException {
         out.write("addUserSessionToDB|"+Integer.toString(numOfSession)+"|"+Integer.toString(place)+"|\0");
@@ -138,8 +139,8 @@ public class ClientSocket {
 
     /**
      * function to get from server information about all user sessions
-     * @return
-     * @throws IOException
+     * @return string with session information
+     * @throws IOException default exception input output
      */
     public String sendRequestToGetSessionsInformation() throws IOException{
         out.write("getMySessionsInformation|0");
