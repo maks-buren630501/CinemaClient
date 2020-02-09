@@ -1,4 +1,4 @@
-package com.example.cinemaclient;
+package com.example.cinemaclient.models;
 
 import java.util.ArrayList;
 
@@ -153,5 +153,15 @@ public class Session {
             arrayList.add(Integer.valueOf(string));
         }
         return arrayList;
+    }
+
+
+    public ArrayList<Session> getListOfSession(String request){
+        ArrayList<Session> sessions = new ArrayList<Session>();
+        ArrayList<String> sessionsString = getListStringOfParameters(request);
+        for(String session:sessionsString){
+            sessions.add(parseFromString(session));
+        }
+        return sessions;
     }
 }

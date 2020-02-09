@@ -1,4 +1,4 @@
-package com.example.cinemaclient;
+package com.example.cinemaclient.models;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -27,10 +27,11 @@ public class User {
      * @param lastName of user
      * @param firstName of user
      */
-    private User(String nickName,String lastName, String firstName, InetAddress address, int port){
+    private User(String nickName,String lastName, String firstName, String address, int port) throws IOException {
         this.nickName = nickName;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.clientSocket = new ClientSocket(address,port);
     }
 
     /**
@@ -43,7 +44,7 @@ public class User {
      * @return object or link on this class
      * @throws IOException default exception
      */
-    public static User getInstance(String nickName,String lastName, String firstName, InetAddress address, int port) throws IOException {
+    public static User getInstance(String nickName,String lastName, String firstName, String address, int port) throws IOException {
         if(instance == null){
             instance = new User(nickName,lastName,firstName,address,port);
         }
