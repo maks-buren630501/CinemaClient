@@ -13,7 +13,9 @@ public class LoginPresenter {
 
     private LoginActivity view;
 
-    private MyTask myTask;
+    private CreateUserRunnable createUserRunnable;
+
+    private SendRequestRunnable sendRequestRunnable;
 
     public LoginPresenter(LoginActivity loginActivity) {
         this.view = loginActivity;
@@ -25,8 +27,8 @@ public class LoginPresenter {
      * @return 1 if create success and -1 if was any error
      */
     public void createUser() throws InterruptedException {
-        myTask = new MyTask();
-        myTask.execute();
+        createUserRunnable = new CreateUserRunnable(user);
+        createUserRunnable.run();
         Thread.sleep(1000);
         user = User.getInstance();
     }
@@ -41,35 +43,65 @@ public class LoginPresenter {
             view.showError();
         }
         else{
-            switch (user.getClientSocket().sendRequestLogin(login)){
-                case 1:{
-                    view.showRegisterActivity();
-                    break;
-                }
-                case 2:{
-                    user.setNickName(login);
-                    view.showStartActivity();
-                    break;
-                }
-            }
+            sendRequestRunnable = new SendRequestRunnable(user,view,login);
+            sendRequestRunnable.run();
         }
     }
 
-    class MyTask extends AsyncTask<Void, Void, Void> {
+    class CreateUserRunnable implements Runnable{
+        private User user;
+        public CreateUserRunnable(User user){
+            this.user = user;
+        }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        public void run() {
             try {
-                User.getInstance("unlnow", "unknow", "unknow", "192.168.0.104", 8080);
-
+                User.getInstance("unlnow", "unknow", "unknow", "192.168.43.10", 8080);
             } catch (IOException e) {
-                view.showError();
                 e.printStackTrace();
             }
-            return null;
+        }
+    }
+
+    class SendRequestRunnable implements Runnable{
+        private User user;
+        private LoginActivity view;
+        private String login;
+        public SendRequestRunnable(User user,LoginActivity view,String login){
+            this.user = user;
+            this.view = view;
+            this.login = login;
         }
 
+        @Override
+        public void run() {
+            try {
+                switch (user.getClientSocket().sendRequestLogin(login)) {
+                    case 1: {
+                        view.showRegisterActivity();
+                        break;
+                    }
+                    case 2: {
+                        user.setNickName(login);
+                        view.showStartActivity();
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
+
 }
+
+
+
+
+
+
+
 
 

@@ -1,5 +1,7 @@
 package com.example.cinemaclient.models;
 
+import android.os.StrictMode;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -25,6 +27,8 @@ public class ClientSocket {
      * @throws IOException default exception input output
      */
     public ClientSocket(String address, int port) throws IOException {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         clientSocket = new Socket(address,port);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
