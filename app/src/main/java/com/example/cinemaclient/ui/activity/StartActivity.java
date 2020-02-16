@@ -41,12 +41,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void showActivityListOfFilms(){
-        Intent intent = new Intent(this, StartActivity.class);
+        Intent intent = new Intent(this, FilmsListActivity.class);
         startActivity(intent);
     }
 
     public void showActivityListOfUserSessions(){
-        Intent intent = new Intent(this, StartActivity.class);
+        Intent intent = new Intent(this, UserSessionsActivity.class);
         startActivity(intent);
     }
 }

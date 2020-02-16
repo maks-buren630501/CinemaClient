@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class SessionFilmPresenter {
     private SessionFilmActivity view;
     private User user;
+    private SendRequestToGetPlaces sendRequestToGetPlaces;
 
 
     public SessionFilmPresenter(SessionFilmActivity view) {
@@ -22,9 +23,50 @@ public class SessionFilmPresenter {
         return session.getListOfSession(stringExtra);
     }
 
-    public void selectSession(int number) throws IOException {
-        String hall = user.getClientSocket().sendRequestToGetHall(number);
-        String FreePlacesList = user.getClientSocket().sendRequestToGetFreePlaces(number);
-        
+    public void selectSession(int number) throws IOException, InterruptedException {
+        sendRequestToGetPlaces = new SendRequestToGetPlaces(user,number);
+        Thread thread = new Thread(sendRequestToGetPlaces);
+        thread.join();
+        String hall = sendRequestToGetPlaces.getHall();
+        String freePlacesList = sendRequestToGetPlaces.getFreePlacesList();
+        view.showSessionPlacesActivity(hall,freePlacesList,number);
+    }
+
+    public class SendRequestToGetPlaces implements Runnable{
+
+        int number;
+        private User user;
+        private String hall;
+        private String freePlacesList;
+
+        public SendRequestToGetPlaces(User user,int number){
+            this.user = user;
+            this.number = number;
+        }
+
+        @Override
+        public void run() {
+
+            try {
+                hall = user.getClientSocket().sendRequestToGetHall(number);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                freePlacesList = user.getClientSocket().sendRequestToGetFreePlaces(number);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        public String getFreePlacesList(){
+            return this.freePlacesList;
+        }
+
+        public String getHall(){
+            return this.hall;
+        }
     }
 }

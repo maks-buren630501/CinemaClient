@@ -14,10 +14,11 @@ public class StartPresenter {
     }
 
     public void clickButtonAddNewSession(){
-
+        view.showActivityListOfFilms();
     }
 
     public void clickButtonShowListOfSessions(){
+        view.showActivityListOfUserSessions();
 
     }
 }

@@ -1,6 +1,7 @@
 package com.example.cinemaclient.ui.presenter;
 
 import android.os.AsyncTask;
+import android.os.Trace;
 
 import com.example.cinemaclient.models.User;
 import com.example.cinemaclient.ui.activity.LoginActivity;
@@ -28,8 +29,11 @@ public class LoginPresenter {
      */
     public void createUser() throws InterruptedException {
         createUserRunnable = new CreateUserRunnable(user);
-        createUserRunnable.run();
-        Thread.sleep(1000);
+        Thread thread = new Thread(createUserRunnable);
+        //createUserRunnable.run();
+        //Thread.sleep(1000);
+        thread.run();
+        thread.join();
         user = User.getInstance();
     }
 
@@ -57,7 +61,7 @@ public class LoginPresenter {
         @Override
         public void run() {
             try {
-                User.getInstance("unlnow", "unknow", "unknow", "192.168.43.10", 8080);
+                User.getInstance("unlnow", "unknow", "unknow", "192.168.0.104", 8080);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -23,10 +23,14 @@ public class FilmsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_films_list);
         recyclerView = findViewById(R.id.rv_films);
         presenter = new FilmsListPresenter(this);
-        initFilmsList();
+        try {
+            initFilmsList();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initFilmsList() {
+    private void initFilmsList() throws InterruptedException {
         FilmsAdapter adapter = new FilmsAdapter(presenter.getListOfFilms(), presenter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
