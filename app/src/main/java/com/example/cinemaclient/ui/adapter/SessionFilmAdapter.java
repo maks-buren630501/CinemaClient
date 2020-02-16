@@ -64,6 +64,8 @@ public class SessionFilmAdapter extends RecyclerView.Adapter<SessionFilmAdapter.
                 presenter.selectSession(listOfSessions.get(getLayoutPosition()).getNumber());
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
