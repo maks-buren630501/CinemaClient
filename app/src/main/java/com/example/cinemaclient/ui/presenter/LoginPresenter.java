@@ -61,7 +61,7 @@ public class LoginPresenter {
         @Override
         public void run() {
             try {
-                User.getInstance("unlnow", "unknow", "unknow", "192.168.0.104", 8080);
+                User.getInstance("unlnow", "unknow", "unknow", "192.168.43.10", 8080);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.cinemaclient.R;
 import com.example.cinemaclient.ui.presenter.SessionPlacesPresenter;
@@ -27,22 +28,40 @@ public class SessionPlacesAdapter extends RecyclerView.Adapter<SessionPlacesAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_places, parent, false);
-        return new SessionPlacesAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull SessionPlacesAdapter.ViewHolder viewHolder, int i) {
+        String placeString = Integer.toString(this.freePlacesList.get(i));
+        String hall = Integer.toString(this.hall);
+        viewHolder.placeString.setText(placeString);
+        viewHolder.hallString.setText(hall);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return freePlacesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView placeString;
+        TextView hallString;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            placeString = itemView.findViewById(R.id.tv_place);
+            hallString = itemView.findViewById(R.id.tv_hall);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            try {
+                presenter.selectPlace(freePlacesList.get(getLayoutPosition()));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

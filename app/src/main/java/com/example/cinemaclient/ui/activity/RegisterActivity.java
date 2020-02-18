@@ -28,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         registerButton = findViewById(R.id.bt_register);
         firstName = findViewById(R.id.et_first_name);
         lastName = findViewById(R.id.et_last_name);
+        presenter = new RegisterPresenter(this);
         registerButton.setOnClickListener(this);
     }
 

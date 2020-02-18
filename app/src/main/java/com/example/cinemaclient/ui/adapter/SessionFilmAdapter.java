@@ -53,7 +53,7 @@ public class SessionFilmAdapter extends RecyclerView.Adapter<SessionFilmAdapter.
         public ViewHolder(@NonNull View view) {
             super(view);
             filmTittle = view.findViewById(R.id.tv_film_title);
-            filmDate = view.findViewById(R.id.tv_film_date);
+            filmDate = view.findViewById(R.id.tv_session_date);
             filmTime = view.findViewById(R.id.tv_film_time);
             itemView.setOnClickListener(this);
         }

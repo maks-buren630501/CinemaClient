@@ -19,7 +19,7 @@
          />
 
     <TextView
-        android:id="@+id/tv_film_date"
+        android:id="@+id/tv_session_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -34,9 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tv_film_date"
-        app:layout_constraintEnd_toEndOf="@+id/tv_film_date"
-        app:layout_constraintTop_toBottomOf="@+id/tv_film_date"
+        app:layout_constraintStart_toStartOf="@+id/tv_session_date"
+        app:layout_constraintEnd_toEndOf="@+id/tv_session_date"
+        app:layout_constraintTop_toBottomOf="@+id/tv_session_date"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="5dp"
 

@@ -43,7 +43,7 @@ public class SessionFilmActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SessionPlacesActivity.class);
         intent.putExtra(HALL, hall);
         intent.putExtra(FREEPLACES, freePlacesList);
-        intent.putExtra(NUMBER, number);
+        intent.putExtra(NUMBER, Integer.toString(number));
         startActivity(intent);
     }
 }

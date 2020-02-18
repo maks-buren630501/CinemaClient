@@ -26,6 +26,7 @@ public class SessionFilmPresenter {
     public void selectSession(int number) throws IOException, InterruptedException {
         sendRequestToGetPlaces = new SendRequestToGetPlaces(user,number);
         Thread thread = new Thread(sendRequestToGetPlaces);
+        thread.run();
         thread.join();
         String hall = sendRequestToGetPlaces.getHall();
         String freePlacesList = sendRequestToGetPlaces.getFreePlacesList();

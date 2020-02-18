@@ -1,8 +1,14 @@
 package com.example.cinemaclient.models;
 
+import java.util.ArrayList;
+
 public class UserSession extends Session {
     private int hall;
     private int place;
+
+    public UserSession(){
+
+    }
 
     /**
      * Default constructor with params
@@ -95,5 +101,18 @@ public class UserSession extends Session {
         int numOfHall = Integer.valueOf(hall);
         int numOfPlace = Integer.valueOf(place);
         return new UserSession(film,date,time,numOfHall,numOfPlace);
+    }
+
+    public ArrayList<UserSession> getListOfUserSession(String request){
+        ArrayList<UserSession> sessions = new ArrayList<UserSession>();
+        ArrayList<String> sessionsString = getListStringOfParameters(request);
+        for(String session:sessionsString){
+            sessions.add(this.parseFromString(session));
+        }
+        return sessions;
+    }
+
+    public int getHall() {
+        return hall;
     }
 }
